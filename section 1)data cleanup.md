@@ -59,6 +59,8 @@ for drow in new_data:
 ```
 ### 2. Formatting Data
 
+2.1 Qualitative Data Handling
+
 One of the most common forms of data cleanup is getting your unreadable or hardto-
 read data and data types to fit a proper readable format
 
@@ -87,3 +89,83 @@ for x in a:
     print("Question:{[1]}\nAnswer:{}".format(x[0],x[1]))
 ```
 ![image](https://user-images.githubusercontent.com/53164959/70109034-11526100-168e-11ea-9f10-c010609cec09.png)
+
+2.2 Numerical Data Handling
+
+Our current dataset doesn’t have a large amount of numeric data, so we’ll just use some example numbers to show more formatting
+options for different numerical types
+
+```python
+# Data Preparation
+clients={}
+David={'Height':176,
+        'Weight':54,
+        'vision':-10.2}
+
+Han={'Height':235,
+        'Weight':23,
+        'vision':-11.2}
+clients.update({'David':David})
+clients.update({'Han':Han})
+
+# Setting up the format in which you want to present your data
+string_to_print='Height:{Height:.4f}\n'
+string_to_print+='Weight:{Weight:}\n'
+string_to_print+='vision:{vision:.2f}'
+
+print(string_to_print.format(**clients['David']))
+
+```
+What is unpacking a dictionary?
+
+_Unpacking a Python dictionary will send the key/value pairs in expanded form; here, the unpacked keys and values are sent to
+the format method._
+
+
+2.3 Date Format Data Handling
+
+Imagine you have selected one of the rows from zipped_data and wonder if you can add the time taken for the interview. 
+This data is added to the list at the end of the index called duration and dur for short. Here is the step by step procedures to implement what we are wishing to !
+
+```python
+#Select one of the rows from zipped_data
+a=list(zipped_data[0])
+
+#Prepare  a list to locate where our interested information is
+for x in a:
+    print("Question:{0}\nAnswer:{1}".format(x[0],x[1]))
+```
+
+We have found the following information
+
+```
+index number:7, Contents:['MWM6D', 'Day of interview']
+index number:8, Contents:['MWM6M', 'Month of interview']
+index number:9, Contents:['MWM6Y', 'Year of interview']
+
+index number:13, Contents:['MWM10H', 'Start of interview - Hour']
+index number:14, Contents:['MWM10M', 'Start of interview - Minutes']
+index number:15, Contents:['MWM11H', 'End of interview - Hour']
+index number:16, Contents:['MWM11M', 'End of interview - Minutes']
+```
+
+```python
+from datetime import datetime
+#create a date string and pattern string using the syntax defined in the python 
+record_format='%m/%d/%Y %H:%M'
+
+#create a base string to parse all the relevant data from the many entries 
+#note that a=list(zipped_data[0])
+start_string='{}/{}/{} {}:{}'.format(a[8][1],a[7][1],a[9][1],a[13][1],a[14][1])
+end_string='{}/{}/{} {}:{}'.format(a[8][1],a[7][1],a[9][1],a[15][1],a[16][1])
+start_time=datetime.strptime(start_string,record_format)
+end_time=datetime.strptime(end_string,record_format)
+
+#calculate the time diff
+duration=end_time-start_time
+
+#add to our data
+a.append((['dur','duration',''],duration.total_seconds()/60))
+
+##print the last section of data
+print(a[-1])
