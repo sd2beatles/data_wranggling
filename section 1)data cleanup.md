@@ -74,7 +74,8 @@ string. Let’s take a closer look at format
 a=list(zipped_data[0])
 
 for x in a:
-    print("Question:{0}\nAnswer:{1}".format(x[0],x[1]))
+    if x[0][2] !='':
+        print("Question:{0}\nAnswer:{1}".format(x[0][2],x[1]))
 ```
 ![image](https://user-images.githubusercontent.com/53164959/70108966-eec04800-168d-11ea-8b49-7c7bab073424.png)
 
