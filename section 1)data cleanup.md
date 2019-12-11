@@ -1,3 +1,5 @@
+1,2,
+
 ### 1. Identifying Values for Data Cleanup
 
 To translate ambiguous or abbreviated header to more human-readable version, you definately obtain an easy-to-use abbrevaition list. 
@@ -13,6 +15,7 @@ header_dr=reader(open('\mn_headers_updated.csv','r',encoding='UTF8'))
 Make sure that we are trained to compare the number of input features in our data sets. 
 Here,data_rows have more than what the header_rows have.Therefore,any column not to be assigned any readable name would be called the current notation.
 
+### Intial Version
 ```python
 data_rows=[i for i in data_dr]
 #note that header_rows containing abbreviated_names,full_names,question
@@ -23,6 +26,10 @@ print("Number of header Descript:{0}".format(len(header_rows)))
 #Note header rows contain three information: abbreviated name, full name, question
 #Createa a dictionary file only containg the first two information
 
+
+#recoding time starts from here
+import timeit
+start=timeit.default_timer()
 
 #store only abbreviated names matched to header_rows 
 all_short_headers=[h[0] for h in header_rows]
@@ -55,8 +62,41 @@ for row in data_rows[1:]:
 zipped_data=[]
 #Zips each row(now exactly matched with header with data) and adds it to a new array,zipped_data
 for drow in new_data:
-    zipped_data.append(zip(final_header_rows,drow))   
+    zipped_data.append(zip(final_header_rows,drow))  
+end=timeit.default_timer()
+print("Total time taken: {0}".format(end-start))
 ```
+
+### Concise Version
+
+```python
+
+start=timeit.default_timer()
+
+all_short_headers=[d[0] for d in data_header]
+skip_index=[]
+final_header_rows=[]
+for index,value in enumerate(data[0]):
+    if value not in all_short_headers:
+        skip_index.append(index)
+    else:
+        for head in data_header[1:]:
+            if head[0]==value:
+                final_header_rows.append(head)
+new_data=[]
+no_elment=len(data[1])
+for row in data[1:]:
+    new=[row[i] for i in range(no_elment) if i not in skip_index]
+    new_data.append(new)
+
+zipped_data=[]
+for row in new_data:
+    zipped_data.append(zip(final_header_rows,row))
+end=timeit.default_timer()
+print("Total time taken:{0}".format(end-start))
+```
+Surprisingly, the second approach only teakes 0.456 ,which is about three times faster than the first approach.  
+
 ### 2. Formatting Data
 
 2.1 Qualitative Data Handling
