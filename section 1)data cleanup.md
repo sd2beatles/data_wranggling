@@ -1,5 +1,3 @@
-1,2,
-
 ### 1. Identifying Values for Data Cleanup
 
 To translate ambiguous or abbreviated header to more human-readable version, you definately obtain an easy-to-use abbrevaition list. 
@@ -15,7 +13,7 @@ header_dr=reader(open('\mn_headers_updated.csv','r',encoding='UTF8'))
 Make sure that we are trained to compare the number of input features in our data sets. 
 Here,data_rows have more than what the header_rows have.Therefore,any column not to be assigned any readable name would be called the current notation.
 
-### Intial Version
+### (1) Intial Version
 ```python
 data_rows=[i for i in data_dr]
 #note that header_rows containing abbreviated_names,full_names,question
@@ -67,7 +65,7 @@ end=timeit.default_timer()
 print("Total time taken: {0}".format(end-start))
 ```
 
-### Concise Version
+### (2) Concise and Improved Version
 
 ```python
 
@@ -97,9 +95,9 @@ print("Total time taken:{0}".format(end-start))
 ```
 Surprisingly, the second approach only teakes 0.456 ,which is about three times faster than the first approach.  
 
-### 2. Formatting Data
+## 2. Formatting Data
 
-2.1 Qualitative Data Handling
+### 2.1 Qualitative Data Handling
 
 One of the most common forms of data cleanup is getting your unreadable or hardto-
 read data and data types to fit a proper readable format
@@ -163,7 +161,7 @@ _Unpacking a Python dictionary will send the key/value pairs in expanded form; h
 the format method._
 
 
-2.3 Date Format Data Handling
+### 2.3 Date Format Data Handling
 
 Imagine you have selected one of the rows from zipped_data and wonder if you can add the time taken for the interview. 
 This data is added to the list at the end of the index called duration and dur for short. Here is the step by step procedures to implement what we are wishing to !
