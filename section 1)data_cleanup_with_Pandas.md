@@ -70,7 +70,6 @@ def data_summary(data,shape=True,skew_threshold=2,kurtosis_threshold=3):
 
 data_summary(data)
 ```
-
 ![image](https://user-images.githubusercontent.com/53164959/70679348-28b9cb80-1cd8-11ea-88a1-af1a46740f94.png)
 
 
