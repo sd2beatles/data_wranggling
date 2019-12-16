@@ -60,6 +60,7 @@ def data_summary(data,shape=True,skew_threshold=2,kurtosis_threshold=3):
         result_skew=table.skewness.dropna()[sknewss]
         kurtosis=table.loc[:,'kurtosis'].dropna().map(lambda x: True if x>=kurtosis_threshold else False )
         result_kurtosis=table.skewness.dropna()[kurtosis]
+    
     print("Data Shape:{0}".format(data.shape))
     print('-'*100)
     print("Data Types and thier Counts:\n{0}".format(table.data_types.value_counts()))
@@ -67,11 +68,30 @@ def data_summary(data,shape=True,skew_threshold=2,kurtosis_threshold=3):
     print("Skewness Of Quantitative Data:\n{0}".format(result_skew))
     print('-'*100)
     print("Kurtosis of Quantitative Data:\n{0}".format(result_kurtosis))
-
-data_summary(data)
+    print('-'*100)
+    missing_str=data_missing.astype('str')
+    print("The missing Rate: {0}".format(missing_str.map(lambda x: x+'%')))
 ```
 ![image](https://user-images.githubusercontent.com/53164959/70679348-28b9cb80-1cd8-11ea-88a1-af1a46740f94.png)
 
 ### 4. Missing Values 
+
+Step 1) The following code returns columns whose missing rate is higher than 50 %, which deems to provide necessary information for our upcoming data analysis. Therefore, we should get them left from our input features, which contributes to the reduction of the data dimension 
+
+```python
+#store column index whose missing value>50
+removed_index=[]
+missing_rate=data.isnull().sum()/data.shape[0]*100
+for i,j in zip(missing_rate.index,missing_rate):
+    if j>50:
+        removed_index.append(i)
+#remove the columns with missing rate>50 from our input features
+data=data.drop(removed_index,axis=1)
+
+#In case where we have missing values 
+data.replace('None',np.nan,inplace=True)
+
+```
+
 
 
