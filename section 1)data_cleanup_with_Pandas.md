@@ -75,6 +75,8 @@ def data_summary(data,shape=True,skew_threshold=2,kurtosis_threshold=3):
 ![image](https://user-images.githubusercontent.com/53164959/70679348-28b9cb80-1cd8-11ea-88a1-af1a46740f94.png)
 
 ### 4. Missing Values 
+![image](https://user-images.githubusercontent.com/53164959/70906480-d36c1a00-2049-11ea-8858-23fd0ddcf090.png)
+
 
 Step 1) The following code returns columns whose missing rate is higher than 50 %, which deems to provide necessary information for our upcoming data analysis. Therefore, we should get them left from our input features, which contributes to the reduction of the data dimension 
 
@@ -92,6 +94,27 @@ data=data.drop(removed_index,axis=1)
 data.replace('None',np.nan,inplace=True)
 
 ```
+step 2) Since missing inputs are more than one, we consider any tools that impute the data multiply. From the library with the name of  fancyimpute, we can import MICE to make this happen. Just like machine learning libraries, the MICE library requires an extra step to get our input features dummied before implemented. 
+
+```python
+category_index=[]
+for i in range(data.shape[1]):
+    if data.iloc[:,i].dtype=='object':
+        data.iloc[:,i]=data.iloc[:,i].astype('category')
+        category_index.append(i)
+cat_vars=data.columns[category_index]
+
+for var in cat_vars:
+    cat_list=pd.get_dummies(data[var],prefix=var)
+    data=data.join(cat_list)
+
+data_vars=data1.columns.values.tolist()
+final_columns=[i for i in data_vars if i not in category_index]
+data=data[final_columns]    
+```
+
+step 3) Implement multiple_impuation 
+
 
 
 
