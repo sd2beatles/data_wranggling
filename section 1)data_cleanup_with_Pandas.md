@@ -116,5 +116,6 @@ data=data[final_columns]
 step 3) Implement multiple_impuation 
 
 
+![image](https://user-images.githubusercontent.com/53164959/71269915-b9a53c80-2393-11ea-8f84-ffa65f53f095.png)
 
 
